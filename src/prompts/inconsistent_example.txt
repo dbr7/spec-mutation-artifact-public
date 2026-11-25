@@ -1,0 +1,99 @@
+You are simulating an INCONSISTENT-EXAMPLE FAULT — the developer
+mistake of changing a rule in the description but forgetting to
+update the worked examples, so the examples still reflect the old
+behaviour.
+
+Identify the rule-bearing clause shown below and produce a new
+specification where THAT clause is changed to a different
+behavioural rule. The worked sample I/O examples (sample inputs,
+sample outputs, "Example:" / ">>>" / "Sample N" blocks) must be
+left UNCHANGED so they now contradict the edited clause.
+
+The contradiction must be between PROSE and EXAMPLES specifically.
+Other prose clauses may be updated for coherence with the edited
+clause, or left as-is. The point is that the worked examples are
+left frozen at the old behaviour.
+
+WHAT COUNTS AS A VALID RULE EDIT (pick exactly one):
+  - flip a polarity      ("print Yes if X" -> "print Yes if NOT X")
+  - swap a verb / aggregator ("print Yes" -> "print No",
+                              "the maximum"  -> "the minimum",
+                              "ascending"   -> "descending")
+  - shift a numeric threshold ("at most K"  -> "at most K-1",
+                                "non-empty"  -> "of length >= 2")
+  - swap a type / structure  ("a string"   -> "a list of strings")
+  - replace the operator     ("identical"  -> "differ in at most 2 chars")
+
+WHAT DOES NOT COUNT AS A MUTATION (do NOT do these):
+  - duplicating a section header (e.g. emitting "Output" twice)
+  - duplicating a sentence or trailing phrase
+  - adding leading whitespace, indentation, or blank lines
+  - paraphrasing without changing the rule (e.g. "print Yes" ->
+    "output Yes")
+  - reordering words while keeping the same meaning
+  - adding an explanation that the description changed
+  - any formatting-only edit
+
+SELF-CHECK BEFORE EMITTING:
+  1. The clause anchor "{clause}" must read DIFFERENTLY in the new
+     specification, with a different behavioural meaning.
+  2. Pick at least one of the worked examples in the original spec.
+     Read its sample input. If the program followed the NEW rule,
+     it would produce a DIFFERENT sample output than the one shown.
+     If you cannot identify such an example, the inconsistency is
+     vacuous and you must output UNAPPLICABLE instead.
+  3. The rest of the spec (section headers, blank lines,
+     indentation, examples) must be byte-identical to the original
+     except inside the clause anchor.
+
+WORKED EXAMPLE (illustrative; do not copy verbatim).
+
+Suppose the original spec contains:
+
+    If the score is at least 10, print Yes; otherwise, print No.
+
+    Sample Input 1
+    12
+    Sample Output 1
+    Yes
+
+and the anchor is the rule clause "If the score is at least 10,
+print Yes". A valid mutation raises the threshold in the prose,
+leaving Sample 1 frozen:
+
+    If the score is at least 20, print Yes; otherwise, print No.
+
+    Sample Input 1
+    12
+    Sample Output 1
+    Yes
+
+After the edit, the new rule says Sample 1 should print "No"
+(because 12 is less than 20), but the frozen sample still says
+"Yes". That is the prose-vs-example contradiction this operator is
+supposed to produce.
+
+If the targeted clause has no associated examples (no sample I/O,
+no doctest, no worked example to leave inconsistent), or if no rule
+edit produces a real example contradiction (self-check step 2
+fails), output EXACTLY the literal token UNAPPLICABLE on a single
+line.
+
+Otherwise output the ENTIRE rewritten specification of similar
+length to the original. Do NOT regenerate or recompute the example
+outputs — copy them verbatim from the original. Do NOT output only
+the edited fragment. Do NOT include any reasoning, commentary,
+chain-of-thought, "Wait", "However", "Therefore", "Note:", "Thus,",
+"Hence", "Final answer:", or any meta-discussion about your edit.
+Do NOT add notes acknowledging the inconsistency. Do NOT restate
+the original specification. Output exactly one block of text and
+stop.
+
+Original specification:
+"""
+{spec}
+"""
+
+Clause to edit (leaving the examples frozen at the old rule):
+"{clause}"
+{quote_anchor}

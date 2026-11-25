@@ -1,0 +1,139 @@
+{
+  "benchmark": "livecodebench",
+  "spec_variant": "full",
+  "batch_start": 40,
+  "batch_end": 50,
+  "num_problems_attempted": 10,
+  "num_problems_completed": 9,
+  "num_problems_skipped": 1,
+  "skipped_ids": [
+    "LCB/abc380_e"
+  ],
+  "mean_sc": 0.3478059627182434,
+  "mean_sc_evaluable": 0.432010582010582,
+  "mean_gr": 0.9389129389129389,
+  "mean_survival_rate": 0.7191877553165554,
+  "mean_noop_rate": 0.0,
+  "mean_legacy_generator_ignored_rate": 0.0,
+  "mean_kill_rate": 0.28081224468344457,
+  "mean_applicable_ops_per_clause": 2.3458811169337483,
+  "num_clause_covered": 51,
+  "num_clause_evaluable": 120,
+  "num_clause_survived_only": 69,
+  "num_clause_no_evaluable": 30,
+  "num_mutations_skipped_structural": 644,
+  "num_mutations_skipped_duplicate": 12,
+  "num_mutations_rejected_quality": 1,
+  "mutation_quality_rejection_counts": {
+    "backtick_count_changed": 1
+  },
+  "num_mutations_rejected_impact": 45,
+  "mutation_impact_rejection_counts": {
+    "invalid_substitute:numeric_change": 12,
+    "invalid_substitute:modal_or_polarity_change": 2,
+    "invalid_negate:numeric_change": 8,
+    "stale_sample_outputs:output_affecting_change": 6,
+    "invalid_perturb:no_numeric_or_comparison_target": 1,
+    "no_obvious_semantic_lever:unknown": 12,
+    "low_impact_clause_type:io_format": 3,
+    "weak_weaken:definitional_ambiguity": 1
+  },
+  "num_mutations_rejected_codegen": 6,
+  "mutation_codegen_rejection_counts": {
+    "codegen_failed": 6
+  },
+  "num_mutations_legacy_generator_ignored": 0,
+  "num_mutations_repaired_samples": 49,
+  "mutation_sample_repair_counts": {
+    "stale_sample_outputs:output_affecting_change": 49
+  },
+  "num_classic_mutation_candidates": 253,
+  "num_classic_mutations_accepted": 242,
+  "num_operators_skipped_budget": 0,
+  "num_mutation_candidates_skipped_budget": 194,
+  "per_operator_kill_rate": {
+    "negate": 0.4411764705882353,
+    "substitute": 0.25675675675675674,
+    "perturb": 0.23255813953488372,
+    "weaken": 0.15625,
+    "example": 0.0,
+    "partial_edit": 0.3888888888888889,
+    "inconsistent_example": 0.8333333333333334
+  },
+  "per_operator_count": {
+    "negate": 34,
+    "substitute": 74,
+    "perturb": 172,
+    "weaken": 32,
+    "example": 20,
+    "partial_edit": 18,
+    "inconsistent_example": 12
+  },
+  "per_slot_kill_rate": {
+    "classic_type": 0.1,
+    "classic_literal": 0.6666666666666666,
+    "classic_comparison": 0.10714285714285714,
+    "classic_numeric": 0.15306122448979592,
+    "classic_class": 0.1111111111111111,
+    "classic_quantifier": 0.0,
+    "classic_case": 0.5,
+    "classic_position": 0.0,
+    "classic_answer_transform": 0.8823529411764706,
+    "classic_arithmetic": 0.5,
+    "classic_parity": 1.0,
+    "classic_axis": 0.0,
+    "classic_equality": 1.0,
+    "classic_adjacency": 1.0
+  },
+  "per_slot_count": {
+    "classic_type": 30,
+    "classic_literal": 3,
+    "classic_comparison": 56,
+    "classic_numeric": 98,
+    "classic_class": 9,
+    "classic_quantifier": 6,
+    "classic_case": 4,
+    "classic_position": 4,
+    "classic_answer_transform": 17,
+    "classic_arithmetic": 6,
+    "classic_parity": 1,
+    "classic_axis": 6,
+    "classic_equality": 1,
+    "classic_adjacency": 1
+  },
+  "cascade_counts": {
+    "legacy_generator_ignored": 0,
+    "noop": 0,
+    "survived_byte_identical": 0,
+    "survived_non_identical": 266,
+    "killed": 96
+  },
+  "cascade_rates": {
+    "legacy_generator_ignored": 0.0,
+    "noop": 0.0,
+    "survived_byte_identical": 0.0,
+    "survived_non_identical": 0.7348066298342542,
+    "killed": 0.26519337016574585
+  },
+  "operators_used": [
+    "remove",
+    "weaken",
+    "negate",
+    "perturb",
+    "example",
+    "substitute",
+    "partial_edit",
+    "inconsistent_example"
+  ],
+  "mutants_per_operator": 1,
+  "classic_mutants": true,
+  "llm_mutants": true,
+  "classic_mutants_per_operator": 64,
+  "max_mutants_per_clause": 4,
+  "max_operators_per_clause": 8,
+  "max_codegen_failures_per_clause": 8,
+  "llm_timeout_seconds": 180.0,
+  "llm_max_attempts": 3,
+  "retry_failed_refs": false,
+  "results_root": "results"
+}

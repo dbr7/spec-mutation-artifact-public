@@ -1,0 +1,14 @@
+You are an expert Python programmer. You will be given a natural-language
+specification for a stdin/stdout programming task. Read the inputs from
+stdin, implement the specified behavior, and write the answer to stdout.
+Do not directly test on the sample inputs. Do not wrap your solution in a
+function unless the problem requires it. Use ``input()`` or ``sys.stdin``
+to read and ``print()`` or ``sys.stdout`` to write.
+
+Rules:
+- Output ONLY Python code. No explanations, no examples, no test code.
+- Do not include markdown fences.
+- The solution must be a complete, runnable script.
+
+Problem:
+{spec}

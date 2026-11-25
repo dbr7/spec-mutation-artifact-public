@@ -1,0 +1,130 @@
+{
+  "benchmark": "livecodebench",
+  "spec_variant": "full",
+  "batch_start": 20,
+  "batch_end": 30,
+  "num_problems_attempted": 10,
+  "num_problems_completed": 5,
+  "num_problems_skipped": 5,
+  "skipped_ids": [
+    "LCB/abc376_g",
+    "LCB/abc377_d",
+    "LCB/abc377_c",
+    "LCB/abc377_e",
+    "LCB/abc377_g"
+  ],
+  "mean_sc": 0.23983957219251337,
+  "mean_sc_evaluable": 0.40625,
+  "mean_gr": 0.8,
+  "mean_survival_rate": 0.5132925011813456,
+  "mean_noop_rate": 0.0,
+  "mean_legacy_generator_ignored_rate": 0.0,
+  "mean_kill_rate": 0.358384373523318,
+  "mean_applicable_ops_per_clause": 2.4404719463542994,
+  "num_clause_covered": 22,
+  "num_clause_evaluable": 52,
+  "num_clause_survived_only": 30,
+  "num_clause_no_evaluable": 25,
+  "num_mutations_skipped_structural": 399,
+  "num_mutations_skipped_duplicate": 6,
+  "num_mutations_rejected_quality": 0,
+  "mutation_quality_rejection_counts": {},
+  "num_mutations_rejected_impact": 62,
+  "mutation_impact_rejection_counts": {
+    "stale_sample_outputs:output_affecting_change": 20,
+    "invalid_substitute:modal_or_polarity_change": 2,
+    "low_impact_clause_type:io_format": 4,
+    "sample_prose_clause": 14,
+    "invalid_perturb:no_numeric_or_comparison_target": 3,
+    "no_obvious_semantic_lever:unknown": 15,
+    "invalid_substitute:numeric_change": 2,
+    "invalid_negate:numeric_change": 1,
+    "weak_omission:precondition": 1
+  },
+  "num_mutations_rejected_codegen": 23,
+  "mutation_codegen_rejection_counts": {
+    "codegen_failed": 23
+  },
+  "num_mutations_legacy_generator_ignored": 0,
+  "num_mutations_repaired_samples": 27,
+  "mutation_sample_repair_counts": {
+    "stale_sample_outputs:output_affecting_change": 27
+  },
+  "num_classic_mutation_candidates": 128,
+  "num_classic_mutations_accepted": 86,
+  "num_operators_skipped_budget": 0,
+  "num_mutation_candidates_skipped_budget": 82,
+  "per_operator_kill_rate": {
+    "weaken": 0.0,
+    "negate": 0.43478260869565216,
+    "substitute": 0.42424242424242425,
+    "partial_edit": 0.6428571428571429,
+    "inconsistent_example": 0.25,
+    "perturb": 0.2903225806451613,
+    "example": 0.0
+  },
+  "per_operator_count": {
+    "weaken": 10,
+    "negate": 23,
+    "substitute": 33,
+    "partial_edit": 14,
+    "inconsistent_example": 4,
+    "perturb": 62,
+    "example": 9
+  },
+  "per_slot_kill_rate": {
+    "classic_comparison": 0.22727272727272727,
+    "classic_state": 0.6666666666666666,
+    "classic_answer_transform": 1.0,
+    "classic_type": 0.2,
+    "classic_numeric": 0.02631578947368421,
+    "classic_axis": 0.0,
+    "classic_objective": 0.5,
+    "classic_equality": 1.0
+  },
+  "per_slot_count": {
+    "classic_comparison": 22,
+    "classic_state": 3,
+    "classic_answer_transform": 12,
+    "classic_type": 5,
+    "classic_numeric": 38,
+    "classic_axis": 2,
+    "classic_objective": 2,
+    "classic_equality": 2
+  },
+  "cascade_counts": {
+    "legacy_generator_ignored": 0,
+    "noop": 0,
+    "survived_byte_identical": 0,
+    "survived_non_identical": 103,
+    "killed": 52
+  },
+  "cascade_rates": {
+    "legacy_generator_ignored": 0.0,
+    "noop": 0.0,
+    "survived_byte_identical": 0.0,
+    "survived_non_identical": 0.6645161290322581,
+    "killed": 0.33548387096774196
+  },
+  "operators_used": [
+    "remove",
+    "weaken",
+    "negate",
+    "perturb",
+    "example",
+    "substitute",
+    "partial_edit",
+    "inconsistent_example"
+  ],
+  "mutants_per_operator": 1,
+  "classic_mutants": true,
+  "llm_mutants": true,
+  "classic_mutants_per_operator": 64,
+  "max_mutants_per_clause": 4,
+  "max_operators_per_clause": 8,
+  "max_codegen_failures_per_clause": 8,
+  "llm_timeout_seconds": 180.0,
+  "llm_max_attempts": 3,
+  "retry_failed_refs": false,
+  "results_root": "results"
+}

@@ -1,0 +1,106 @@
+You are simulating a PARTIAL-EDIT FAULT — the developer mistake of
+editing one part of a specification but forgetting to update other
+parts that depend on it, leaving the spec internally inconsistent.
+
+Identify the clause shown below and produce a new specification
+where THAT clause is changed to a different behavioural rule. At
+least one OTHER prose clause elsewhere in the spec (a constraint,
+return-value description, or related rule statement) must be left
+UNCHANGED so it now contradicts the edited clause.
+
+Real-world analogue: a developer rewrites the description of what
+the function does but forgets to update the constraints or
+return-value section.
+
+The contradiction must be between PROSE clauses (rules,
+constraints, return-value description). Examples may be touched or
+not. The point is that the resulting spec is internally
+inconsistent at the prose level.
+
+WHAT COUNTS AS A VALID RULE EDIT (pick exactly one):
+  - flip a polarity      ("print Yes if X" -> "print Yes if NOT X")
+  - swap a verb / aggregator ("print Yes" -> "print No",
+                              "the maximum"  -> "the minimum",
+                              "ascending"   -> "descending")
+  - shift a numeric threshold ("at most K"  -> "at most K-1",
+                                "non-empty"  -> "of length >= 2")
+  - swap a type / structure  ("a string"   -> "a list of strings")
+  - replace the operator     ("identical"  -> "differ in at most 2 chars")
+
+WHAT DOES NOT COUNT AS A MUTATION (do NOT do these):
+  - duplicating a section header (e.g. emitting "Output" twice)
+  - duplicating a sentence or trailing phrase
+  - adding leading whitespace, indentation, or blank lines
+  - paraphrasing without changing the rule (e.g. "print Yes" ->
+    "output Yes")
+  - reordering words while keeping the same meaning
+  - adding an explanation that the description changed
+  - any formatting-only edit
+  - propagating the edit consistently to dependent prose. Doing so
+    erases the partial-edit fault entirely; the whole point is that
+    at least one dependent prose clause is left STALE.
+
+SELF-CHECK BEFORE EMITTING:
+  1. The clause anchor "{clause}" must read DIFFERENTLY in the new
+     specification, with a different behavioural meaning.
+  2. Identify at least one OTHER prose clause in the spec (call it
+     C') that depends on the edited clause: a constraint that
+     references the same quantity, a return-value description that
+     references the same outcome, or a related rule that would
+     follow from the old rule. C' must remain BYTE-IDENTICAL in
+     your output. After your edit, C' must contradict the new rule
+     in the edited clause: a reader who follows C' would compute or
+     return something different than a reader who follows the new
+     edited clause. If you cannot identify such a C' that remains
+     byte-identical and contradicts the new rule, the partial-edit
+     fault is vacuous and you must output UNAPPLICABLE instead.
+  3. The rest of the spec (section headers, blank lines,
+     indentation, examples) must be byte-identical to the original
+     except inside the clause anchor.
+
+WORKED EXAMPLE (illustrative; do not copy verbatim).
+
+Suppose the original spec contains:
+
+    Print the sum of the selected numbers.
+    The returned value is the total of the selected numbers.
+
+    Constraints
+    - The selected numbers are positive integers.
+
+and the anchor is the first sentence ("Print the sum of the selected
+numbers."). A valid mutation changes that rule to "product" while
+leaving the dependent return-value sentence byte-identical:
+
+    Print the product of the selected numbers.
+    The returned value is the total of the selected numbers.
+
+    Constraints
+    - The selected numbers are positive integers.
+
+The return-value sentence is unchanged but still says "total",
+contradicting the new product rule. That is the prose-vs-prose
+contradiction this operator is supposed to produce.
+
+If the targeted clause has no other prose clause that meaningfully
+depends on it (i.e. self-check step 2 fails: leaving everything
+else unchanged would not produce a real prose-vs-prose
+contradiction), output EXACTLY the literal token UNAPPLICABLE on a
+single line.
+
+Otherwise output the ENTIRE rewritten specification of similar
+length to the original. Do NOT output only the edited fragment. Do
+NOT include any reasoning, commentary, chain-of-thought, "Wait",
+"However", "Therefore", "Note:", "Thus,", "Hence", "Final answer:",
+or any meta-discussion about your edit. Do NOT add notes
+acknowledging the inconsistency. Do NOT restate the original
+specification. Output exactly one block of text and stop.
+
+Original specification:
+"""
+{spec}
+"""
+
+Clause to edit (leaving its dependents unchanged):
+"{clause}"
+{quote_anchor}

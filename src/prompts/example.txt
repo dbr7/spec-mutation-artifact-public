@@ -1,0 +1,103 @@
+You are applying an EXAMPLE TAMPERING FAULT to a code specification.
+
+The targeted I/O example is identified BY THE ANCHOR SUBSTRING shown
+below the prompt. Treat that anchor as the SOLE editing surface.
+Every other example block in the specification, and every line of
+prose, must remain BYTE-IDENTICAL in your output.
+
+Identify the targeted example and produce a new specification where
+ONE concrete value inside that example is altered. Valid tampering
+options:
+
+  - change the expected/sample output value
+        "f([1,2,3]) == 6"          -> "f([1,2,3]) == 7"
+        "Sample Output 1\n\nYes"   -> "Sample Output 1\n\nNo"
+        "Sample Output 1\n\n5"     -> "Sample Output 1\n\n6"
+  - change a literal in the sample input
+        "f([1,2,3]) == 6"          -> "f([1,2,4]) == 6"
+        "Sample Input 1\n\n3 4 1"  -> "Sample Input 1\n\n3 4 2"
+  - swap an expected output for a plausible-but-wrong value of the
+    same type (e.g. swap a different small integer, swap "Yes"/"No")
+
+The change must be NON-TRIVIAL: produce a tampered example whose
+input/output relationship contradicts the behavioural prose of the
+spec. Do not return a synonym, an arithmetically-equivalent
+re-statement, or a whitespace-only edit.
+
+WHAT DOES NOT COUNT AS A MUTATION (do NOT do these):
+  - editing a DIFFERENT example block (Sample 2 when anchor named
+    Sample 1, the second doctest when anchor named the first, etc.)
+  - editing the prose surrounding the example
+  - rewriting the explanation of why the sample output is what it is
+  - whitespace-only, indentation-only, or punctuation-only edits
+  - rounding or re-formatting the same numeric value
+  - leaving the targeted anchor BYTE-IDENTICAL while editing
+    something else
+
+This operator deliberately introduces an inconsistency between the
+targeted example and the prose. Do NOT update the prose to match
+the tampered value. Do NOT alter any non-targeted example.
+
+SELF-CHECK BEFORE EMITTING:
+  1. Locate the anchor substring in your output. Confirm at least
+     one literal value INSIDE that anchor was changed (an input
+     literal, an expected output literal, or a sample-output
+     value). If the anchor is byte-identical to the original,
+     output UNAPPLICABLE instead.
+  2. Locate every OTHER example block in the original spec. Confirm
+     each one appears byte-identical in your output. If any other
+     example block was changed, you violated the contract; fix it
+     or output UNAPPLICABLE.
+  3. The prose (descriptions, constraints, output rules) must
+     appear byte-identical in your output.
+
+WORKED EXAMPLE (illustrative; do not copy verbatim).
+
+Suppose the original spec contains:
+
+    Sample Input 1
+    4
+    1 2 3 4
+    Sample Output 1
+    10
+    The sum of the four numbers is 10.
+
+    Sample Input 2
+    3
+    2 2 2
+    Sample Output 2
+    6
+
+and the anchor block is the "Sample Output 1" block above. A valid
+mutation changes the sample output from "10" to "11":
+
+    Sample Output 1
+    11
+    The sum of the four numbers is 10.
+
+Sample 2 remains byte-identical. The prose of the spec remains
+byte-identical. The contradiction is now between the prose rule
+("print the sum") and Sample 1's expected output ("11").
+
+If the targeted clause is not actually an I/O example, or the
+example has no concrete literal value to tamper with, or no
+non-trivial value swap is possible, output EXACTLY the literal
+token UNAPPLICABLE on a single line.
+
+Otherwise output the ENTIRE rewritten specification of similar
+length to the original, including all prose and all other examples.
+Do NOT output only the edited fragment. Do NOT include any
+reasoning, commentary, chain-of-thought, "Wait", "However",
+"Therefore", "Note:", "Thus,", "Hence", "Final answer:", or any
+meta-discussion about your edit. Do NOT restate the original
+specification. Do NOT include multiple drafts. Output exactly one
+block of text and stop.
+
+Original specification:
+"""
+{spec}
+"""
+
+Example to perturb (this is the ONLY block you may edit):
+"{clause}"
+{quote_anchor}

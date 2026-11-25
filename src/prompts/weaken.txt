@@ -1,0 +1,71 @@
+You are applying a VAGUENESS FAULT to a code specification.
+
+Identify the clause shown below and produce a new specification where
+that clause is WEAKENED in a way that changes executable behaviour.
+This is for mutation testing: the original intended solution should
+be wrong for at least one ordinary valid input under the mutated
+specification. Stated input-size bounds, type constraints,
+allowed-value sets, and preconditions are valid specification clauses:
+weaken them when they are the targeted clause. Do NOT merely relax a
+formatting convention or explanatory sentence that a correct original
+solution would still satisfy.
+
+Prefer weakening a decision condition, required output condition,
+operation rule, objective, ordering rule, adjacency rule, counting
+target, or other semantic lever. Examples:
+
+  - "exactly 3" -> "at least 1"
+  - "strictly greater than" -> "greater than or equal to"
+  - "all elements" -> "some elements"
+  - "in ascending order" -> "in sorted order"
+  - "print Yes if X and Y hold" -> "print Yes if X holds"
+  - "requires at least K consecutive valid positions" -> "requires at least K-1 consecutive valid positions"
+
+Do NOT weaken definitions or symbol mappings by adding uncertainty.
+Forbidden weak edits include:
+
+  - "means" -> "may mean"
+  - "means" -> "may indicate"
+  - "is represented by" -> "may be represented by"
+  - "does not have" -> "may have"
+  - "can perform one operation" -> "may perform one operation"
+  - "maximum number" -> "a number" or "any number"
+  - "answer Q queries" -> "process Q queries"
+
+Those edits are ambiguous prose, not destructive mutation-testing
+faults. Likewise, do not make the answer under-specified so the
+original optimal answer remains one acceptable answer. For a
+symbol-state mapping, prefer a concrete behavioural change that
+changes which state the solution must compute with.
+
+The change must be NON-TRIVIAL: produce a strictly weaker constraint,
+not a synonym, and not a constraint that the original solution would
+still satisfy on every relevant input under the mutated specification.
+An input-domain relaxation such as "N <= 100" -> "N <= 101" is
+meaningful when it changes the stated set of allowed inputs.
+
+The mutated specification MUST be internally consistent. If the
+weakened constraint contradicts an unchanged clause, an I/O example,
+or a stated precondition, update those parts as well so the
+rewritten spec stays coherent.
+
+If no behaviour-changing weakening can be expressed as clean
+specification text for this clause, output EXACTLY the literal token
+UNAPPLICABLE on a single line.
+
+Otherwise output the ENTIRE rewritten specification of similar length
+to the original. Do NOT output only the edited fragment. Do NOT
+include any reasoning, commentary, chain-of-thought, "Wait",
+"However", "Therefore", "Note:", "Thus,", "Hence", "Final answer:",
+or any meta-discussion about your edit. Do NOT restate the original
+specification. Do NOT include multiple drafts. Output exactly one
+block of text and stop.
+
+Original specification:
+"""
+{spec}
+"""
+
+Clause to weaken:
+"{clause}"
+{quote_anchor}

@@ -1,0 +1,147 @@
+You are applying a CONCEPT SUBSTITUTION FAULT to a code specification.
+
+Identify the clause shown below and produce a new specification where
+ONE domain concept inside the clause is replaced with a SEMANTICALLY
+DISTINCT alternative drawn from the same conceptual category. This is
+for mutation testing: choose a substitution that should require a
+different solution on at least one ordinary valid input. Prefer
+concepts that control the answer, operation semantics, objective,
+ordering, adjacency, aggregation, decision predicate, input type,
+allowed-value domain, or precondition. Do NOT substitute only a
+generic input/output format word when the original algorithm and
+output relation would remain the same.
+Examples of valid substitutions:
+
+  - container types:    list <-> dict, string <-> array
+  - element types:      integers <-> floats, strings <-> integers
+  - comparison ops:     "<=" <-> ">=",  "<" <-> "==",
+                        "less than" <-> "greater than"
+  - quantifiers:        all <-> some, no <-> any, every <-> few
+  - directions:         ascending <-> descending, row <-> column,
+                        left <-> right, first <-> last
+  - case:               lowercase <-> uppercase
+  - char classes:       letters <-> digits, vowels <-> consonants
+  - emptiness:          empty <-> non-empty, full <-> empty
+  - aggregators:        maximum <-> minimum, sum <-> product
+
+The substitution must:
+
+  1. Produce a CHANGE IN MEANING. Do not return a synonym (e.g.,
+     "every" -> "all" is forbidden, "lowercase" -> "lower-case" is
+     forbidden). The original and the substituted concept must denote
+     genuinely different things, and the difference must affect the
+     specification's observable behaviour, including the set of
+     accepted/required inputs when the targeted clause states that
+     domain.
+
+  2. Be grammatically valid. After the substitution the surrounding
+     text must still read as a coherent specification phrase.
+
+  3. Be applicable. The original clause must actually contain a
+     concept that has a same-category alternative. Prefer a concrete
+     same-category alternative when one is available.
+
+  4. Be CATEGORY-LEVEL, not numeric. Do NOT shift a numeric literal,
+     bound, threshold, count, length, index, or "X=N"-style equality
+     to a different number. Numeric perturbation is the perturb
+     operator's responsibility, not substitute's. If the clause's
+     only candidate change is to a number (e.g. "K=1" -> "K=2",
+     "at most 3" -> "at most 4", "of length 5" -> "of length 6"),
+     do not use substitute for that numeric change.
+
+     Replacing one permutation with another permutation of the same
+     items is also forbidden when the task already allows
+     rearrangement/permutation. For such clauses, changing only the
+     displayed order of the same required symbols is equivalent and
+     must be UNAPPLICABLE.
+
+  5. Be CONCEPT-LEVEL, not a polarity flip. Do NOT swap polarity
+     tokens or flip the polarity of a predicate. The negate operator
+     owns polarity. Forbidden as a substitute mutation include:
+     "True" <-> "False", "Yes" <-> "No", "print Yes" <-> "print No",
+     "present" <-> "absent", "include" <-> "exclude", "valid" <->
+     "invalid", "is" <-> "is not", "must" <-> "must not". If the
+     only candidate change in this clause is a polarity flip, do not
+     use substitute for that polarity change.
+
+The mutated specification MUST be internally consistent. If the
+substitution contradicts an unchanged clause, an I/O example, or a
+stated precondition, update those parts as well so the rewritten
+spec stays coherent.
+
+PROPAGATION TO WORKED EXAMPLES (this is the most-violated part of
+the contract; read carefully). When the substitution constrains the
+LITERAL VALUES that appear in the worked examples, you MUST
+re-encode those values so they satisfy the new constraint. The
+substitution's preconditions on inputs propagate to every Sample
+Input / Sample Output / doctest / "Example:" block in the spec.
+Sample-output values that are positions, counts, or relational
+results may stay unchanged when the relation is preserved by the
+re-encoding; sample-input literals that violate the new constraint
+must be re-encoded.
+
+Examples of mandatory propagation:
+
+  - "lowercase English letters" -> "uppercase English letters":
+        every Sample Input string must be re-encoded to uppercase.
+        Sample Output positions may stay the same when the relation
+        is preserved by the re-encoding.
+  - "letters" -> "digits":
+        every Sample Input string must be re-encoded to a digit
+        string. Use a simple deterministic re-encoding when one is
+        available.
+  - "list of integers" -> "list of floats":
+        every Sample Input list element must gain a decimal point
+        ("[1,2,3]" -> "[1.0,2.0,3.0]").
+  - "ascending" -> "descending":
+        every Sample Output that exhibits the order must be
+        reversed accordingly, when the worked example demonstrates
+        the order.
+
+If the re-encoding is not well-defined for the worked examples
+(e.g., a structural type swap that destroys the example's
+semantics, or a category swap whose plausible re-encoding is
+ambiguous), do not invent explanatory output. Prefer a clean
+clause-level substitution plus any unambiguous dependent edits; use
+UNAPPLICABLE only when the resulting specification cannot be kept as
+clean specification text.
+
+EXPLANATION PROSE THAT DERIVES SAMPLE OUTPUTS MUST ALSO BE
+UPDATED. Worked examples often include a one-line natural-language
+justification that derives the expected output from the input
+for example, "the first mismatch is at position 3, so print 3").
+When your substitution changes the expected output value, the
+derivation prose must be rewritten so it still derives the new
+value correctly. If you change the sample output but leave stale
+prose deriving the old value, you have emitted a self-contradictory
+example block. Rewrite the derivation prose to match the new output;
+use UNAPPLICABLE only when no clean update is possible.
+
+Substitutions that touch ONLY abstract operators or aggregators
+("max" <-> "min", "<=" <-> ">=", "all" <-> "some") usually do
+require Sample Output value updates: if the worked example's
+expected output depends on the substituted operator, recompute
+the output when it is a small direct consequence of the example.
+Use UNAPPLICABLE only when the update would require guessing
+unstated semantics.
+
+If no behaviour-changing substitution can be expressed as clean
+specification text for this clause, output EXACTLY the literal token
+UNAPPLICABLE on a single line.
+
+Otherwise output the ENTIRE rewritten specification of similar length
+to the original. Do NOT output only the edited fragment. Do NOT
+include any reasoning, commentary, chain-of-thought, "Wait",
+"However", "Therefore", "Note:", "Thus,", "Hence", "Final answer:",
+or any meta-discussion about your edit. Do NOT restate the original
+specification. Do NOT include multiple drafts. Output exactly one
+block of text and stop.
+
+Original specification:
+"""
+{spec}
+"""
+
+Clause to substitute in:
+"{clause}"
+{quote_anchor}

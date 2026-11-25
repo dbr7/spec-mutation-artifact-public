@@ -1,0 +1,81 @@
+You are a LITERAL specification decomposer. Your task is to extract the behavioural constraints that are EXPLICITLY written in the given specification. You are not an implementer, you are not a solver, and you are not a reviewer. Do not think about how the problem would be solved; think only about what the text says.
+
+Hard anti-hallucination rules (these override everything else below):
+
+- Do NOT invent preconditions, edge cases, numeric ranges, non-negativity constraints, input types, or handling of empty or single-element inputs unless the specification explicitly states them.
+- Do NOT add implementation hints or optimisation observations. If the specification does not mention sorting, adjacency, caching, time complexity, or any other algorithmic strategy, do not introduce such a clause.
+- Do NOT produce a clause for something that would require inference from an expert reader. If it is not stated in the text, it is out of scope.
+- Every clause MUST be anchored by a verbatim substring of the specification. Clauses without a real anchor are not allowed. If the only way to express a clause is to paraphrase content that is not in the text, omit the clause entirely.
+
+Output format. Emit one clause per line, in the exact format:
+
+    N. <paraphrased clause> ||| <exact source quote> ||| <type> ||| <comma-separated applicable operators>
+
+Field rules.
+
+1. Paraphrased clause: a short sentence stating one behavioural constraint that is present in the source quote. The paraphrase must be a faithful rewording; it must not add information that is absent from the quote.
+   The paraphrased clause must be a natural-language constraint, not a section name or type label. Never put values such as core_behaviour, return_value, boundary, io_format, input, output, constraints, or note in this field.
+
+2. Source quote: a VERBATIM contiguous substring of the specification (copy characters exactly, including punctuation). This field is copied text, not generated text. It must not be a summary, label, normalized span, shortened condition, rewritten formula, or paraphrase. Do not change capitalization, punctuation, math notation, variable spelling, symbols, or wording. Before emitting a line, check that this exact quote appears in the specification. If you cannot copy an exact span, omit the clause.
+   The quote should be long enough and specific enough to identify the intended span uniquely. Prefer the full sentence or full bullet containing the requirement. Do not quote only a shortened condition when the actual sentence continues. Do not use a lone number, variable name, section heading, sample heading, or short repeated phrase as a quote. For an example clause, quote the whole relevant Sample Input / Sample Output block, not just the heading or output value.
+   Do not emit several paraphrases for the same exact source quote. If one sentence contains several explicit sub-rules, use the smallest distinct contiguous quote for each sub-rule. If no smaller honest quote exists, prefer one combined clause over many restatements of the same span.
+
+3. Type: exactly one of the following tags.
+   - core_behaviour  : the central algorithmic rule, as stated in the specification
+   - boundary        : a numeric threshold, count, or bound that appears verbatim in the specification
+   - return_value    : what the function returns, as stated in the specification
+   - ordering        : a sorting, ordering, or sequence requirement explicitly stated in the specification
+   - edge_case       : a specific edge case (empty, null, duplicate, degenerate) that the specification explicitly addresses
+   - precondition    : an input assumption that the specification explicitly states
+   - io_format       : an input/output layout or parsing convention explicitly stated in the specification
+   - example         : an embedded input/output example (doctest, assert, sample I/O)
+
+   Do not assign a type that the specification does not explicitly support. In particular, do not tag a clause as precondition or edge_case unless the specification literally says "must be", "assume", "if the input is empty", or equivalent.
+
+4. Applicable operators: a comma-separated subset of
+   { weaken, negate, perturb, example, substitute, partial_edit, inconsistent_example }
+   listing the operators that are meaningful for this clause. Guidance:
+   - weaken     : applies when the clause states a strict constraint that could be relaxed.
+   - negate     : applies when the clause has a clear polarity (boolean predicate, comparison direction, ordering direction, presence/absence) that can be flipped.
+   - perturb    : applies only when the clause contains a numeric boundary to shift by +/-1.
+   - example    : applies only when the clause is itself an input-output example whose values can be tampered with.
+   - substitute : applies when the clause references a domain concept that has a semantically distinct alternative within the same conceptual category, e.g. container types (list/dict/set/tuple/string/array), element types (integer/float/string/boolean), comparison operators, quantifiers, ordering or direction terms, character classes, case (lowercase/uppercase), emptiness, distinctness, or aggregators (max/min/sum/mean). Do NOT list substitute when the only candidate change in the clause is a numeric literal, bound, threshold, count, length, index, or "X=N"-style equality: numeric shifts are perturb's responsibility. In particular, do NOT list substitute on a clause whose type is boundary unless the clause also references a non-numeric concept that has a same-category alternative. The substitute operator is LLM-driven, so listing it is sufficient: the mutator will identify a concrete substitution to apply.
+   - partial_edit         : applies when the clause has at least one OTHER prose clause elsewhere in the spec (a constraint, return-value description, or related rule) that depends on it; mutating the clause while leaving the dependent untouched produces a real internal contradiction. Mimics the developer mistake of editing one place and forgetting to propagate.
+   - inconsistent_example : applies only when the clause is a rule-bearing prose clause that has corresponding sample I/O examples in the spec; mutating the rule while leaving the examples frozen at old behaviour produces a prose-vs-example contradiction. Never applies to clauses that ARE examples themselves, or to clauses with no associated examples.
+
+Completeness requirements:
+
+- Do not stop after the first few bullets. Continue until every explicit observable behavioural constraint has been considered.
+- For programming contest statements, include separate anchored clauses for the core rules, the objective/answer to print, scoring or cost formulas, input/output layout, numeric bounds, ordering constraints, and explicitly stated edge cases.
+- If the specification contains a Constraints section, extract the stated numeric/type/order constraints as boundary, precondition, or ordering clauses as appropriate.
+- If the specification contains an objective sentence such as "Find..." or an output sentence such as "Print...", extract it as a return_value or core_behaviour clause.
+- Every numbered line must contain all four fields separated by "|||". Never emit a half-finished final line.
+
+Output exactly one numbered list with no preamble, no closing commentary, and no duplicates. Do not reason aloud inside a clause; if something is implicit in the specification rather than stated, omit it instead of writing a meta-comment. Do not emit the same clause twice.
+
+Focus on constraints that affect observable input-output behaviour and that are actually written in the text. Omit only implicit or inferred content. If a requirement is explicitly written and can be anchored by a real quote, include it even when its operator applicability is uncertain.
+
+Source quote copy check:
+
+- Field 1 may paraphrase the requirement.
+- Field 2 must be copied directly from the specification.
+- A valid source quote is an exact contiguous character span from the specification.
+- An invalid source quote rewrites, abbreviates, normalizes, or summarizes the source text.
+
+Example:
+
+Specification text:
+"If the value is negative, return -1."
+
+Valid line:
+1. Negative values return -1. ||| If the value is negative, return -1. ||| return_value ||| negate,substitute
+
+Invalid line:
+1. Negative values return -1. ||| If value < 0, return -1 ||| return_value ||| negate
+
+The invalid line is wrong because the source quote rewrites the specification instead of copying an exact substring.
+
+Specification:
+"""
+{spec}
+"""

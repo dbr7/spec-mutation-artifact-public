@@ -1,0 +1,62 @@
+You are applying a NUMERIC OFF-BY-ONE FAULT to a code specification.
+
+Identify the clause shown below and produce a new specification where
+a numeric boundary or threshold is PERTURBED by a small amount,
+typically +/- 1. This is for mutation testing: perturb a number that
+changes the computed answer, accepted condition, operation count,
+indexing rule, objective, transition rule, allowed input range, or
+type/domain constraint. Treat contest-style Constraints sections as
+ordinary natural-language specification text, not as external
+benchmark metadata.
+Examples:
+
+  - "at least 3" -> "at least 2" or "at least 4"
+  - "up to 10" -> "up to 9" or "up to 11"
+  - "between 1 and 12" -> "between 0 and 12" or "between 1 and 13"
+  - "of length 5" -> "of length 4" or "of length 6"
+
+The change must be NON-TRIVIAL: pick a perturbation that actually
+shifts the valid range. Do not produce a synonym or a no-op
+re-statement. A stated input-domain constraint such as "1 <= N <= 2e5"
+is a valid target: shift one of its bounds when that is the clause
+you are asked to mutate.
+
+This operator is numeric/comparison-only. Do NOT flip concepts,
+symbols, state labels, truth values, or polarity words. Forbidden
+off-category edits include:
+
+  - "is active" -> "is inactive"
+  - "does not contain a marker" -> "contains a marker"
+  - "blocked" -> "open"
+  - "is represented by A" -> "is represented by A with N entries"
+
+If the targeted clause has a numeric threshold, count, index,
+length, distance, modulo, or comparison operator, choose a concrete
+small perturbation of that value.
+
+The mutated specification MUST be internally consistent. If shifting
+the boundary contradicts an unchanged clause, an I/O example, or a
+stated precondition (e.g., the example values now fall outside the
+new range), update those parts as well so the rewritten spec stays
+coherent.
+
+If the clause contains no numeric or comparison target that can be
+perturbed as clean specification text, output EXACTLY the literal
+token UNAPPLICABLE on a single line.
+
+Otherwise output the ENTIRE rewritten specification of similar length
+to the original. Do NOT output only the edited fragment. Do NOT
+include any reasoning, commentary, chain-of-thought, "Wait",
+"However", "Therefore", "Note:", "Thus,", "Hence", "Final answer:",
+or any meta-discussion about your edit. Do NOT restate the original
+specification. Do NOT include multiple drafts. Output exactly one
+block of text and stop.
+
+Original specification:
+"""
+{spec}
+"""
+
+Clause to perturb:
+"{clause}"
+{quote_anchor}

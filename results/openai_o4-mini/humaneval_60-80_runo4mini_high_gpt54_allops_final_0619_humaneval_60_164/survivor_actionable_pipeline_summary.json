@@ -1,0 +1,31 @@
+{
+  "batch": "<ARTIFACT_ROOT>/results/openai_o4-mini/humaneval_60-80_runo4mini_high_gpt54_allops_final_0619_humaneval_60_164",
+  "method": "survivor_actionable_pipeline_v2",
+  "joint_analysis": "<ARTIFACT_ROOT>/results/openai_o4-mini/humaneval_60-80_runo4mini_high_gpt54_allops_final_0619_humaneval_60_164/survivor_equivalence_reflection_joint.jsonl",
+  "behavior_analysis": null,
+  "total_joint_records": 160,
+  "total_action_records": 160,
+  "missing_mutation_records": 0,
+  "joint_label_counts": {
+    "EQUIV_NOT_REFLECTED": 139,
+    "EQUIV_REFLECTED": 4,
+    "NON_EQUIV_NOT_REFLECTED": 15,
+    "NON_EQUIV_REFLECTED": 2
+  },
+  "action_category_counts": {
+    "mutation_not_reflected": 139,
+    "equivalent_or_redundant": 1,
+    "generator_fidelity": 15,
+    "test_weakness": 5
+  },
+  "action_counts": {
+    "strengthen_mutated_clause_and_regenerate": 154,
+    "downrank_equivalent_mutant": 1,
+    "generate_mutation_guided_tests": 5
+  },
+  "priority_counts": {
+    "medium": 154,
+    "low": 1,
+    "high": 5
+  }
+}

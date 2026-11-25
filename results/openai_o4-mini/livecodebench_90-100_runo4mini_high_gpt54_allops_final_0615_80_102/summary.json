@@ -1,0 +1,125 @@
+{
+  "benchmark": "livecodebench",
+  "spec_variant": "full",
+  "batch_start": 90,
+  "batch_end": 100,
+  "num_problems_attempted": 10,
+  "num_problems_completed": 1,
+  "num_problems_skipped": 9,
+  "skipped_ids": [
+    "LCB/arc186_c",
+    "LCB/arc186_e",
+    "LCB/arc187_b",
+    "LCB/arc188_a",
+    "LCB/arc188_b",
+    "LCB/arc188_c",
+    "LCB/arc188_d",
+    "LCB/arc189_a",
+    "LCB/arc189_b"
+  ],
+  "mean_sc": 0.5,
+  "mean_sc_evaluable": 0.6666666666666666,
+  "mean_gr": 1.0,
+  "mean_survival_rate": 0.627906976744186,
+  "mean_noop_rate": 0.0,
+  "mean_legacy_generator_ignored_rate": 0.0,
+  "mean_kill_rate": 0.37209302325581395,
+  "mean_applicable_ops_per_clause": 1.95,
+  "num_clause_covered": 10,
+  "num_clause_evaluable": 15,
+  "num_clause_survived_only": 5,
+  "num_clause_no_evaluable": 5,
+  "num_mutations_skipped_structural": 115,
+  "num_mutations_skipped_duplicate": 3,
+  "num_mutations_rejected_quality": 0,
+  "mutation_quality_rejection_counts": {},
+  "num_mutations_rejected_impact": 31,
+  "mutation_impact_rejection_counts": {
+    "invalid_substitute:modal_or_polarity_change": 2,
+    "stale_sample_outputs:output_affecting_change": 26,
+    "weak_omission:precondition": 2,
+    "invalid_substitute:numeric_change": 1
+  },
+  "num_mutations_rejected_codegen": 10,
+  "mutation_codegen_rejection_counts": {
+    "codegen_failed": 10
+  },
+  "num_mutations_legacy_generator_ignored": 0,
+  "num_mutations_repaired_samples": 13,
+  "mutation_sample_repair_counts": {
+    "stale_sample_outputs:output_affecting_change": 13
+  },
+  "num_classic_mutation_candidates": 57,
+  "num_classic_mutations_accepted": 28,
+  "num_operators_skipped_budget": 0,
+  "num_mutation_candidates_skipped_budget": 5,
+  "per_operator_kill_rate": {
+    "substitute": 0.25,
+    "weaken": 0.4,
+    "inconsistent_example": 0.0,
+    "negate": 0.42857142857142855,
+    "perturb": 0.5454545454545454,
+    "example": 0.0
+  },
+  "per_operator_count": {
+    "substitute": 8,
+    "weaken": 5,
+    "inconsistent_example": 2,
+    "negate": 14,
+    "perturb": 11,
+    "example": 3
+  },
+  "per_slot_kill_rate": {
+    "classic_state": 0.0,
+    "classic_allowed_domain": 0.0,
+    "classic_numeric": 0.375,
+    "classic_type": 0.0,
+    "classic_comparison": 0.42857142857142855,
+    "classic_objective": 0.0,
+    "classic_answer_transform": 1.0
+  },
+  "per_slot_count": {
+    "classic_state": 1,
+    "classic_allowed_domain": 1,
+    "classic_numeric": 8,
+    "classic_type": 1,
+    "classic_comparison": 14,
+    "classic_objective": 1,
+    "classic_answer_transform": 2
+  },
+  "cascade_counts": {
+    "legacy_generator_ignored": 0,
+    "noop": 0,
+    "survived_byte_identical": 0,
+    "survived_non_identical": 27,
+    "killed": 16
+  },
+  "cascade_rates": {
+    "legacy_generator_ignored": 0.0,
+    "noop": 0.0,
+    "survived_byte_identical": 0.0,
+    "survived_non_identical": 0.627906976744186,
+    "killed": 0.37209302325581395
+  },
+  "operators_used": [
+    "remove",
+    "weaken",
+    "negate",
+    "perturb",
+    "example",
+    "substitute",
+    "partial_edit",
+    "inconsistent_example"
+  ],
+  "mutants_per_operator": 1,
+  "classic_mutants": true,
+  "llm_mutants": true,
+  "classic_mutants_per_operator": 64,
+  "max_mutants_per_clause": 4,
+  "max_operators_per_clause": 8,
+  "max_codegen_failures_per_clause": 8,
+  "llm_timeout_seconds": 180.0,
+  "llm_max_attempts": 3,
+  "retry_failed_refs": false,
+  "results_root": "results"
+}
